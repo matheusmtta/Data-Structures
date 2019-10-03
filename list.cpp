@@ -1,4 +1,6 @@
 #include "list.h"
+//#include <iostream>
+//#include <stdio.h>
 
 List::List(){
   this->begin = nullptr;

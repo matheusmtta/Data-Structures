@@ -8,15 +8,20 @@ List frascos;
 int calc(int quant){
   List principal;
   principal.push_back(0, 0);
-  List copy_list = frascos;
-  while(!copy_list.empty()){
-    int x = copy_list.front();
-    int y = copy_list.weigth();
-    if (x == quant) return 1;
-    principal.push_back(x, y);
-    copy_list.pop_front();
+  Node *head = frascos.begin;
+  while(frascos.begin != nullptr){
+    if (frascos.front() == quant) return 1;
+    principal.push_back(frascos.front(), frascos.weigth());
+    frascos.begin = frascos.begin->next;
   }
-  List combinations = principal;
+  frascos.begin = head;
+  List combinations;
+  Node *head_2 = principal.begin;
+  while(principal.begin != nullptr){
+    combinations.push_back(principal.front(), principal.weigth());
+    principal.begin = principal.begin->next;
+  }
+  principal.begin = head_2;
   while(1){
     int tmp_first = combinations.front();
     int tmp_second = combinations.weigth();
@@ -30,11 +35,14 @@ int calc(int quant){
       int aux_second = principal.weigth();
       principal.pop_front();
       principal.push_back(aux_first, aux_second);
-      if (tmp_first+aux_first == quant) return tmp_second+aux_second;
+      if (tmp_first+aux_first == quant) 
+        return tmp_second+aux_second;
       else combinations.push_back(tmp_first+aux_first, tmp_second+aux_second);
       if (tmp_first-aux_first > 0){
-        if (tmp_first-aux_first == quant) return tmp_second+aux_second;
-        else combinations.push_back(tmp_first-aux_first, tmp_second+aux_second);
+        if (tmp_first-aux_first == quant) 
+          return tmp_second+aux_second;
+        else 
+          combinations.push_back(tmp_first-aux_first, tmp_second+aux_second);
       }
     }
   }
