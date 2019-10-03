@@ -50,6 +50,12 @@ bool List::pop_front(){
 void List::remove(int x){
   Node *aux;
   Node *aux2;
+  if (this->begin->element == x){
+    aux = this->begin;
+    this->begin = aux->next;
+    delete aux;
+    return;
+  }
   for (aux=this->begin; aux != nullptr; aux=aux->next){
     if (aux->next->element == x){
       aux2=aux->next;
