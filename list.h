@@ -23,6 +23,7 @@ class List{
     bool pop_front();
     void remove(int);
     void push_back(int, int);
+    void inspect();
 };
 
 #endif

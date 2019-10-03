@@ -1,5 +1,5 @@
 #include "list.h"
-//#include <iostream>
+#include <iostream>
 //#include <stdio.h>
 
 List::List(){
@@ -91,4 +91,11 @@ void List::push_back(int x, int y){
 
 int List::size(){
   return this->num_elements;
+}
+
+void List::inspect(){
+  Node *aux;
+  for (aux = this->begin; aux != nullptr; aux=aux->next)
+    std::cout << aux->element << " ";
+  std::cout << std::endl;
 }
