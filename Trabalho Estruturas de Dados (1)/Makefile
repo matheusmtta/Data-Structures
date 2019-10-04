@@ -9,7 +9,8 @@ all: build test clean
 
 build:
 	$(CC) $(CFLAGS) -c src/list.cpp -o list.o
-	$(CC) $(CFLAGS) src/main.cpp list.o -o $(EXEC)
+	$(CC) $(CFLAGS) -c src/measures.cpp -o measures.o
+	$(CC) $(CFLAGS) src/main.cpp list.o measures.o -o $(EXEC)
 
 test: $(build)
 	@bash run_tests.sh $(EXEC) $(TMPOUT)
