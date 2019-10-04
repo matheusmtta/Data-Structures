@@ -1,8 +1,6 @@
 #include "../includes/list.h"
 #include <iostream>
 
-using namespace std;
-
 List frascos;
 
 int measure(int quant){
@@ -49,14 +47,14 @@ int measure(int quant){
 
 int main(){
   int n; char type;
-  while(cin >> n >> type){
+  while(std::cin >> n >> type){
     if (type == 'i')
       frascos.push_back(n, 1);
     else if (type == 'r')
       frascos.remove(n);
     else if (type == 'p'){
       int ans = measure(n);
-      cout << ans << endl;
+      std::cout << ans << std::endl;
     }
   }
   return 0;
