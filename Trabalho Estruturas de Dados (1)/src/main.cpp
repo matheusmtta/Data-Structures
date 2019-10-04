@@ -5,7 +5,7 @@ using namespace std;
 
 List frascos;
 
-int calc(int quant){
+int measure(int quant){
   List principal;
   principal.push_back(0, 0);
   Node *head = frascos.begin;
@@ -55,7 +55,7 @@ int main(){
     else if (type == 'r')
       frascos.remove(n);
     else if (type == 'p'){
-      int ans = calc(n);
+      int ans = measure(n);
       cout << ans << endl;
     }
   }
