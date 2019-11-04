@@ -1,5 +1,5 @@
-#include "planet.h"
-#include "sort.h"
+#include "includes/planet.h"
+#include "includes/sort.h"
 #include <string>
 
 void Merge(Planet *arr, int left, int middle, int right){
@@ -50,7 +50,7 @@ void Merge(Planet *arr, int left, int middle, int right){
 
 void Sort_Merge(Planet *arr, int left, int right){
 	if (left < right){
-		int middle = left+(right-1)/2;
+		int middle = (left+right)/2;
 		Sort_Merge(arr, left, middle);
 		Sort_Merge(arr, middle+1, right);
 
