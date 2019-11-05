@@ -60,35 +60,41 @@ void Sort_Merge(Planet *arr, int left, int right){
 
 void Radix(Planet *arr, int left, int right, int size){
 	for (int i = size-1; i >= 0; i--){
-		Count_Sort(arr, left, right, size, i);
+		std::cout << "----------------------" << std::endl;
+		std::cout << "Position: " << i << std::endl;
+		std::cout << "----------------------" << std::endl;
+ 		Count_Sort(arr, left, right, size, i);
 	}
 }
 
 void Count_Sort(Planet *arr, int left, int right,
 								int size, int idx){
-	int elements = right-left+1;
+	int elements = right-left;
+	//std::cout << "elements: " << elements << std::endl;
 	int count[26] = {0};
 	Planet aux[26][elements];
 	Planet output[elements];
 	std::string tmp;
-
+	//std::cout << left << " " << right << std::endl;
 	for (int i = left; i < right; i++){
-		tmp = arr[left].get_name();
-		aux[tmp[idx]-'a'][count[tmp[idx]-'a']];
+		tmp = arr[i].get_name();
+		//std::cout << tmp << std::endl;
+		//td::cout << tmp[idx]-'a' << std::endl;
+		aux[tmp[idx]-'a'][count[tmp[idx]-'a']] = arr[i];
 		count[tmp[idx]-'a']++;
 	}
 
 	int k = 0;
 
-	while (k != elements){
-		for (int i = 0; i < 26; i++){
-			while (count[i] > 0){
-				output[k] = aux[i][count[i-1]];
-				count[i]--;
-				k++;
-			}
+	
+	for (int i = 0; i < 26; i++){
+		int shift=0;
+		while (shift != count[i]){
+			output[k] = aux[i][shift];
+			shift++;
 		}
-	}
+ 	}
+	
 
 	for (int i = 0; i < elements; i++){
 		arr[i] = output[i];
