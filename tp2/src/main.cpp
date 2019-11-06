@@ -24,10 +24,6 @@ int main(){
 	int k = 0, month = 1;
 	int l = 0, r;
 
-	// for (int i = 0; i < total_planets; i++)
-	// 	std::cout << list_planets[i].get_time() << " " <<
-	// 			list_planets[i].get_name() << std::endl;
-
 	while (k != total_planets){
 		int sum = 0;
 		while (sum <= max_time && k != total_planets){
@@ -37,7 +33,6 @@ int main(){
 		}
 		r = k;
 		Radix(list_planets, l, r, name_size);
-		//std::cout << "--------" << std::endl;
 		for (int i = l; i < k; i++){
 			std::cout << month << " " << list_planets[i].get_name() << " " << list_planets[i].get_time() << std::endl;
 		}

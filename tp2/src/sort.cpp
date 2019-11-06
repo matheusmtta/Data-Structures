@@ -60,7 +60,6 @@ void Sort_Merge(Planet *arr, int left, int right){
 
 void Radix(Planet *arr, int left, int right, int size){
 	for (int i = size-1; i >= 0; i--){
-		//std::cout << "*CLUSTER: " << i << std::endl;
  		Count_Sort(arr, left, right, i);
 	}
 }
@@ -77,33 +76,24 @@ void Count_Sort(Planet *arr, int left, int right, int idx){
 		aux[tmp[idx]-'a'][count[tmp[idx]-'a']].set_time(arr[i].get_time());
 		count[tmp[idx]-'a']++;
 	}
-
-	// for (int i = 0; i < 26; i++){
-	// 	std::cout << i << " ";
-	// 	for (int j = 0; j < elements; j++){
-	// 		if (i==0) std::cout << j << " ";
-	// 		std::cout << aux[i][j].get_name() << " ";
-	// 	}
-	// 	std::cout << std::endl;
-	// }
-
+	
 	int k = 0;
-	//std::cout << "-----------------" << std::endl;
+	
 	for (int i = 0; i < 26; i++){
-		int shift=count[i]-1;
-		while (shift >= 0){
+		int shift = 0;
+		while (shift < count[i]){
 			output[k].set_time(aux[i][shift].get_time());
 			output[k].set_name(aux[i][shift].get_name());
-			//std::cout << output[k].get_name() << " " << output[k].get_time() << std::endl;
-			shift--;
+			shift++;
 			k++;
 		}
  	}
-	//std::cout << "-----------------" << std::endl;
 
-	for (int i = 0; i < elements; i++){
-		arr[i].set_time(output[i].get_time());
-		arr[i].set_name(output[i].get_name());
+	k = 0;
+
+	for (int i = left; i < right; i++){
+		arr[i].set_time(output[k].get_time());
+		arr[i].set_name(output[k].get_name());
+		k++;
 	}
-
-}
+}	
