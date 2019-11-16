@@ -19,10 +19,11 @@ class List{
 	List();
 	~List();
 	bool empty();
-	bool find_copy(Word);
+	bool find_copy(std::string);
 	int size();
 	void push_back(Word);
 	void display();
+	int find(std::string);
 };
 
 #endif

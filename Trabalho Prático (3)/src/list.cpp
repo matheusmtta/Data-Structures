@@ -1,4 +1,4 @@
-#include "list.h"
+#include "include/list.h"
 
 List::List(){
 	this->begin = nullptr;
@@ -26,27 +26,31 @@ int List::size(){
 }
 
 void List::push_back(Word aux){
-	Node *x;
-	x->item = aux;
-	if (!this->find_copy(aux)) {
-		if (!this->empty()){
-			this->end->next = x;
-			this->end = x;
-			this->num_elements += 1;
+	if (find_copy(aux.get_name())) {
+		return;
+	}
+	else{
+		Node *node = new Node;
+		node->item = aux;
+		node->item.count++;
+		node->next = nullptr;
+		if (num_elements == 0){
+			this->begin = node;
+    	this->end = node;
 		}
 		else {
-			this->begin = x;
-			this->end = x;
-			this->num_elements += 1;
-		}	
+			this->end->next = node;
+    	this->end = node;
+		}
+		num_elements += 1;
 	}
 }
 
-bool List::find_copy(Word x){
+bool List::find_copy(std::string aux){
 	Node *current;
 	current = this->begin;
 	while(current != nullptr){
-		if (current->item.get_name() == x.get_name()){
+		if (current->item.get_name() == aux){
 			current->item.count++;
 			return true;
 		}
@@ -64,4 +68,16 @@ void List::display(){
 		current = current->next;
 		std::cout << "-----------" << std::endl;
 	}
+}
+
+int List::find(std::string palavra){
+	Node *current;
+	current = this->begin;
+	while (current != nullptr){
+		if (current->item.get_name() == palavra){ 
+			return current->item.count;
+		}
+		current = current->next;
+	}
+	return 0;
 }
