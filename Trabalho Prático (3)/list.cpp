@@ -6,9 +6,8 @@ List::List(){
 	this->num_elements = 0;
 }
 
-~List::List(){
-	Node *current;
-	current = this->begin;
+List::~List(){
+	Node *current = this->begin;
 	while(current != nullptr){
 		this->begin = this->begin->next;
 		delete (current);
@@ -26,8 +25,10 @@ int List::size(){
 	return this->num_elements;
 }
 
-void List::push_back(Word x){
-	if (!this->find_copy(x)) {
+void List::push_back(Word aux){
+	Node *x;
+	x->item = aux;
+	if (!this->find_copy(aux)) {
 		if (!this->empty()){
 			this->end->next = x;
 			this->end = x;
@@ -45,8 +46,8 @@ bool List::find_copy(Word x){
 	Node *current;
 	current = this->begin;
 	while(current != nullptr){
-		if (current->item->get_name() == x.get_name()){
-			current->count++;
+		if (current->item.get_name() == x.get_name()){
+			current->item.count++;
 			return true;
 		}
 		current = current->next;

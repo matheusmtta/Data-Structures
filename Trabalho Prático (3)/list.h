@@ -5,14 +5,16 @@
 #include <string>
 
 class Node{
-	Word item;
-	Word *next;
+	public:
+		Word item;
+		Node *next;
 };
 
 class List{
-	Word *begin;
-	Word *end;
-	int num_elements;
+	public:
+		Node *begin;
+		Node *end;
+		int num_elements;
 
 	List();
 	~List();
@@ -21,6 +23,6 @@ class List{
 	int size();
 	void push_back(Word);
 	void display();
-}
+};
 
 #endif

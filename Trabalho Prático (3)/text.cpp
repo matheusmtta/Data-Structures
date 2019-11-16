@@ -1,5 +1,7 @@
 #include "text.h"
 
+
+
 void Word::set_count(int x){
 	this->count = x;
 }

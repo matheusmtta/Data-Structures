@@ -9,8 +9,6 @@ class Word{
 		std::string name;
 		std::string code;
 	public:
-		Word();
-		~Word();
 		int count = 0;
 		std::string get_name();
 		std::string get_code();
