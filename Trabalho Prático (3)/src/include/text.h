@@ -13,12 +13,9 @@ class Word{
 		std::string get_name();
 		std::string get_code();
 		int get_count();
-		void set_count(int);
 		void set_name(std::string);
 		void set_code(std::string);
 		void display();
 };
-
-
 
 #endif

@@ -10,9 +10,17 @@ void Hash::insert(Word x, int key){
 }
 
 void Hash::displayHash(int key){
- 	table[key].display();
+ 	this->table[key].display();
 }
 
 int Hash::wordFrequency(std::string x, int key){
-	return table[key].find(x);
+	return this->table[key].find(x);
+}
+
+int Hash::size(int key){
+	return this->table[key].size();
+}
+
+Word Hash::get_element(int key, int position){
+	return this->table[key].find(position);
 }

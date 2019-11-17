@@ -81,3 +81,14 @@ int List::find(std::string palavra){
 	}
 	return 0;
 }
+
+Word List::find(int position){
+	int i = 0;
+	Node *current = this->begin;
+	while (current != nullptr && i != position){
+		current = current->next;
+		i++;
+	}
+	Word tmp = current->item;
+	return current->item;
+}

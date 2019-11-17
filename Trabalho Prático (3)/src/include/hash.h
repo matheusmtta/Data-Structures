@@ -14,6 +14,8 @@ class Hash{
 		void insert(Word, int);
 		void displayHash(int);
 		int wordFrequency(std::string, int);
+		int size(int);
+		Word get_element(int, int);
 };
 
 #endif

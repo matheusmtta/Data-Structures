@@ -1,9 +1,5 @@
 #include "include/text.h"
 
-void Word::set_count(int x){
-	this->count = x;
-}
-
 void Word::set_code(std::string str){
 	this->code = str;
 }
@@ -28,4 +24,5 @@ void Word::display(){
 	std::cout << "Palavra: " << this->name << std::endl;
 	std::cout << "Codigo: " << this->code << std::endl;
 	std::cout << "Count: " << this->count << std::endl;
+	std::cout << "---------------" << std::endl;
 }

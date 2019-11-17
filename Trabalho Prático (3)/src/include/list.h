@@ -24,6 +24,7 @@ class List{
 	void push_back(Word);
 	void display();
 	int find(std::string);
+	Word find(int);
 };
 
-#endif
+#endif 
