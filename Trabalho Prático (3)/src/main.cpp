@@ -46,7 +46,7 @@ int main(){
 		}
 	}
 
-	//MinHeap(arrNodes, tNodes);
+	//HuffTree ans = HuffMan(arrNodes, tNodes);
 
 	exit(0);
 
