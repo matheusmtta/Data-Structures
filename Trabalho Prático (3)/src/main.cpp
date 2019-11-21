@@ -1,7 +1,7 @@
 #include "include/list.h"
 #include "include/text.h"
 #include "include/hash.h"
-#include "include/tree.h"
+#include "include/minheap.h"
 #include <iostream>
 #include <string>
 
@@ -45,6 +45,24 @@ int main(){
 			k++;
 		}
 	}
+
+	MinHeapNode *left, *right, *top;
+
+	MinHeap *myHeap = MinHeap(Word, tNodes);
+
+	while(!myHeap.size()==1){
+		left = myHeap.extractMin();
+		right = myHeap.extractMin();
+
+		top = new MinHeapNode;
+		top->set_data(left->get_data());
+		top->set_leaves(left->get_leaves() + right->get_leaves());
+		top->set_freq(left->get_freq() + right->get_freq());
+
+		myHeap.insert(top);
+	}
+
+	MinHeapNode *root = myHeap.extractMin();
 
 	//HuffTree ans = HuffMan(arrNodes, tNodes);
 
