@@ -46,27 +46,30 @@ int main(){
 		}
 	}
 
-	MinHeapNode *left, *right, *top;
+	MinHeap *myHeap;
+	myHeap = new MinHeap(arrNodes, tNodes);
 
-	MinHeap *myHeap = MinHeap(Word, tNodes);
+	MinHeapNode l, r, *top;
 
-	while(!myHeap.size()==1){
-		left = myHeap.extractMin();
-		right = myHeap.extractMin();
+	while (!(myHeap->size == 1)){
+		l = myHeap->extractMin();
+		r = myHeap->extractMin();
 
-		top = new MinHeapNode;
-		top->set_data(left->get_data());
-		top->set_leaves(left->get_leaves() + right->get_leaves());
-		top->set_freq(left->get_freq() + right->get_freq());
+		top = new MinHeapNode();
 
-		myHeap.insert(top);
+		top->set_data(l.get_data());
+		top->set_freq(l.get_freq() + r.get_freq());
+		top->set_leaves(l.get_leaves() + r.get_leaves());
+
+		top->left = &l;
+		top->right = &r;
+
+		myHeap->insert(*top);
 	}
+	
+	//MinHeapNode *root = myHeap->extractMin();
 
-	MinHeapNode *root = myHeap.extractMin();
-
-	//HuffTree ans = HuffMan(arrNodes, tNodes);
-
-	exit(0);
+	//exit(0);
 
 	while (std::cin >> cmd){
 		std::cin >> palavra;

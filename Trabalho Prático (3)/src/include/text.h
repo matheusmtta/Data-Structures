@@ -7,6 +7,7 @@
 class Word{
 	private:
 		std::string name;
+		std::string code;
 	public:
 		int count = 0;
 		std::string get_name();

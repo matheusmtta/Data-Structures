@@ -7,8 +7,8 @@
 
 class MinHeapNode {
 	private:
-		unsigned int leaves;
-		unsigned int freq;
+		int leaves;
+		int freq;
 		std::string data;
 	public:
 		MinHeapNode *left, *right;
@@ -24,16 +24,17 @@ class MinHeapNode {
 
 class MinHeap {
  	public:
- 		unsigned int size;
- 		unsigned int capacity;
- 		MinHeapNode *array;
+ 		int size;
+ 		int capacity;
  		MinHeap(Word*, int);
+ 		MinHeapNode *array;
+		MinHeapNode extractMin();
  		void create(int);
  		void build();
-// 		void heapify(int);
-// 		void insert(MinHeapNode);
-// 		void swap_nodes(MinHeapNode*, MinHeapNode*);
-// 		int get_size();
+ 		void heapify(int);
+	 	void swap_nodes(MinHeapNode*, MinHeapNode*);
+ 		void insert(MinHeapNode);
+ 		int get_size();
  	};
 
 #endif
