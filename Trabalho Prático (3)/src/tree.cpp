@@ -1,32 +1,65 @@
 #include "include/tree.h"
 
-void heapify(Word *arr, int n, int i){
-	int largest = i;
-	int l = 2*i + 1;
-	int r = 2*i + 2;
-
-	if (l < n && arr[l].count > arr[largest].count)
-		largest = l;
-	if (r < n && arr[r].count > arr[largest].count)
-		largest = r;
-	if (largest != i){
-		//SWAP
-		Word tmp = arr[i];
-		arr[i] = arr[largest];
-		arr[largest] = tmp;
-		//RECURSIVE CALL
-		heapify(arr, n, largest);
-	}
+MinHeapNode::MinHeapNode(Word txt){
+	this->data = txt.get_name();
+	this->freq = txt.count;
+	this->left = nullptr;
 }
 
-void HeapSort(Word *arr, int n){
-	for (int i = n/2 - 1; i >= 0; i--)
-		heapify(arr, n, i);
+MinHeap::MinHeap(int capacity, Word *txt){
+	this->capacity = capacity;
+	this->size = 0;
+	this->array = new MinHeapNode[capacity];
 
-	for (int i = n - 1; i >= 0; i--){
-		Word tmp = arr[0];
-		arr[0] = arr[i];
-		arr[i] = tmp;
-		heapify(arr, i, 0);
+	for (int i = 0; i < capacity; ++i){
+		MinHeapNode aux(Word);
+		this->array[i] = insert(aux);
 	}
+
+	this->size = capacity;
+
+	int n = this->size - 1;
+	int i;
+
+	for (i = (n-1)/2; i >= 0; --i)
+		this->heapify(i);
+}
+
+MinHeap::~MinHeap(){
+	delete[] this->array;
+}
+
+void MinHeap::heapify(int idx){
+ 	int smallest = idx;
+ 	int left = 2 * idx + 1;
+ 	int right = 2 * idx + 2;
+
+ 	if (left < this->size && this->array[left]->freq < this->array[smallest]->freq)
+ 		smallest = left;
+
+ 	if (right < this->size && this->array[right]->freq < this->array[smallest]->freq)
+ 		smallest = right;
+
+ 	if (smallest != idx){
+ 		swap(this->array[smallest], this->array[idx]);
+ 		heapify(smallest);
+ 	}
+}		
+
+void MinHeap::swap(MinHeapNode *a, MinHeapNode *b){
+	MinHeapNode *t = a;
+	a = b;
+	b = t;
+}
+
+void insert(MinHeapNode x){
+	this->++size;
+	int i = this->size-1;
+
+	while (i && x.freq < this->array[(i -1)/2].freq){
+		this->array[i] = this->array[(i-1)/2];
+		i = (i - 1)/2;
+	}
+
+	this->array[i] = x;
 }

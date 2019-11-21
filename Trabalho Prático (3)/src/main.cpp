@@ -46,7 +46,7 @@ int main(){
 		}
 	}
 
-	HeapSort(arrNodes, tNodes);
+	//MinHeap(arrNodes, tNodes);
 
 	exit(0);
 
