@@ -1,4 +1,5 @@
 #include "include/minheap.h"
+#include <string.h>
 
 //////////////////////////////
 //					        				//
@@ -44,31 +45,40 @@ int MinHeapNode::get_leaves(){
 
 MinHeap::MinHeap(Word *txt, int tam){
 	this->create(tam);
-
-	for (int i = 0; i < size; i++){
-		MinHeapNode temp;
-		this->array[i] = temp;
-		this->array[i].set_data(txt[i].get_name());
-		this->array[i].set_leaves(1);
-		this->array[i].set_freq(txt[i].count);
+	for (int i = 0; i < tam; i++){
+		this->array[i]->set_data(txt[i].get_name());
+		this->array[i]->set_leaves(1);
+		this->array[i]->set_freq(txt[i].count);
 	}
 
 	this->size = tam;
-	this->build();
+
+	// for (int i = 0; i < this->size; i++){
+	// 	std::cout << this->array[i]->get_data() << std::endl;
+	// 	std::cout << this->array[i]->get_freq() << std::endl;
+	// }
+
+	//std::cout << "----------------------" << std::endl;
+
+	for (int i = this->size - 1; i >= 0; i--){
+		heapify(i);
+	}
+	
+	// for (int i = 0; i < this-> size; i++){
+	// 	std::cout << this->array[i]->get_data() << std::endl;
+	// 	std::cout << this->array[i]->get_freq() << std::endl;
+	// }
 }
 
 void MinHeap::create(int tam){
-	this->array = new MinHeapNode[tam];
+	// this->array = new MinHeapNode[tam];
+	this->array = (MinHeapNode**) malloc(tam * sizeof(MinHeapNode *));
+	for (int i = 0; i < tam; i++)
+		this->array[i] = (MinHeapNode*) malloc(sizeof(MinHeapNode));
 	this->size = 0;
 	this->capacity = tam;
 }
 
-void MinHeap::build(){
-	int n = this->size - 1;
-
-	for (int i = (n - 1) / 2; i >= 0; --i)
-		heapify(i);
-}
 
 bool wgt(MinHeapNode a, MinHeapNode b){
 	if (a.get_freq() < b.get_freq()) return 1;
@@ -77,27 +87,16 @@ bool wgt(MinHeapNode a, MinHeapNode b){
 		if (a.get_leaves() < b.get_leaves()) return 1;
 		else if (a.get_leaves() > b.get_leaves()) return 0;
 		else{
-			std::string x = a.get_data(), y = b.get_data();
-			int mini = x.length();
-
-			if (y.length() < mini) mini = y.length();
-
-			for (int i = 0; i < mini; i++){
-				if (x[i] < y[i]) return 1;
-				else if (x[i] > y[i]) return 0;
-			}
-
-			if (x.length() < y.length()) return 1;
-			else return 0;
+			return a.get_data().compare(b.get_data()) < 0 ? 1 : 0;
 		}
 	}
 }
 
-void MinHeap::swap_nodes(MinHeapNode *a, MinHeapNode *b){
+void MinHeap::swap_nodes(MinHeapNode **a, MinHeapNode **b){
 	MinHeapNode *aux;
-	aux = a;
-	a = b;
-	b = aux;
+	aux = *a;
+	*a = *b;
+	*b = aux;
 }
 
 void MinHeap::heapify(int idx){
@@ -105,21 +104,32 @@ void MinHeap::heapify(int idx){
 	int l = 2 * idx + 1;
 	int r = 2 * idx + 2;
 
-	if (l < this->size && wgt(this->array[l], this->array[smallest]))
+	//std::cout << "smallest: " << smallest << " " << this->array[smallest]->get_data() << " " << this->array[smallest]->get_freq() << std::endl;
+	// if (l < this->size) std::cout << "left: " << l << " " << this->array[l]->get_data() << " " << this->array[l]->get_freq() << std::endl;
+	// if (r < this->size) std::cout << "right: " << r << " " << this->array[r]->get_data() << " " << this->array[r]->get_freq() << std::endl;
+	//std::cout << "-------------" << std::endl;
+	if (l < this->size && wgt(*(this->array[l]), *(this->array[smallest])))
 		smallest = l;
 
-	if (r < this->size && wgt(this->array[r], this->array[smallest]))
+	//std::cout << "smallest: " << smallest << " " << this->array[smallest]->get_data() << " " << this->array[smallest]->get_freq() << std::endl;
+
+	if (r < this->size && wgt(*(this->array[r]), *(this->array[smallest])))
 		smallest = r;
+
+	//std::cout << "smallest: " << smallest << " " << this->array[smallest]->get_data() << " " << this->array[smallest]->get_freq() << std::endl;
 
 	if (smallest != idx){
 		this->swap_nodes(&(this->array[smallest]), &(this->array[idx]));
+		//std::cout << "AFTER smallest: " << smallest << " " << this->array[smallest]->get_data() << " " << this->array[smallest]->get_freq() << std::endl;
+		//std::cout << "idx: " << idx << " " << this->array[idx]->get_data() << " " << this->array[idx]->get_freq() << std::endl;
 		this->heapify(smallest);
 	}
+	//std::cout << "SAIUUUUU" << std::endl << std::endl;
 }	
 
-MinHeapNode MinHeap::extractMin(){
-	MinHeapNode temp = this->array[0];
-	this->array[0] = this->array[this->size - 1];
+MinHeapNode* MinHeap::extractMin(){
+	MinHeapNode *temp = this->array[0];
+	swap_nodes(&(this->array[0]), &(this->array[size - 1]));
 
 	this->size--;
 	this->heapify(0);
@@ -127,11 +137,11 @@ MinHeapNode MinHeap::extractMin(){
 	return temp;
 }
 
-void MinHeap::insert(MinHeapNode var){
+void MinHeap::insert(MinHeapNode *var){
 	this->size++;
 	int i = this->size - 1;
 
-	while (i && wgt(var, this->array[(i - 1)/ 2])){
+	while (i && wgt(*var, *(this->array[(i - 1)/ 2]))){
 		this->array[i] = this->array[(i - 1) / 2];
 		i = (i - 1) / 2; 
 	}
@@ -141,4 +151,37 @@ void MinHeap::insert(MinHeapNode var){
 
 int MinHeap::get_size(){
 	return this->size;
+}
+
+void MinHeap::set_codes(Word *txt, int tam){
+	MinHeapNode root = *(this->array[0]);
+	for (int i = 0; i < tam; i++){
+		std::string name = txt[i].get_name();
+		std::string tobuild;
+		bool flag = false;
+		//std::cout << "pipipipopopo" << std::endl;
+		//std::cout << name << std::endl;
+		create_code(root, &txt[i], tobuild, &flag);
+	}
+}
+
+void create_code(MinHeapNode curr, Word *wanted, std::string str, bool *flag){
+	//std::cout << curr.get_data() << std::endl;
+	if (!(curr.right) && !(curr.left)){
+		if (wanted->get_name() == curr.get_data()){
+			wanted->set_code(str);
+			*flag = true;
+			//std::cout << "chegou " << str << std::endl;
+		}
+	}
+	else{ 
+		if (curr.left && !(*flag)){
+			create_code(*(curr.left), wanted, str + "0", flag);
+		}
+
+
+		if (curr.right && !(*flag)){
+			create_code(*(curr.right), wanted, str + "1", flag);
+		}
+	}
 }

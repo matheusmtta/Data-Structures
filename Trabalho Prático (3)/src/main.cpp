@@ -5,6 +5,12 @@
 #include <iostream>
 #include <string>
 
+void dfs (MinHeapNode *aux){
+	std::cout << '|' << aux->get_data() << '|' << std::endl;
+	if (aux->left != nullptr) dfs(aux->left);
+	if (aux->right != nullptr) dfs(aux->right);
+}
+
 int main(){
 	int n; 
 	std::cin >> n;
@@ -49,25 +55,42 @@ int main(){
 	MinHeap *myHeap;
 	myHeap = new MinHeap(arrNodes, tNodes);
 
-	MinHeapNode l, r, *top;
+	MinHeapNode *l, *r, *top;
+	l = new MinHeapNode();
+	r = new MinHeapNode();
+
+	// std::cout << "-----------------" << std::endl;
 
 	while (!(myHeap->size == 1)){
-		l = myHeap->extractMin();
-		r = myHeap->extractMin();
+		l = (myHeap->extractMin());
+		r = (myHeap->extractMin());
 
 		top = new MinHeapNode();
 
-		top->set_data(l.get_data());
-		top->set_freq(l.get_freq() + r.get_freq());
-		top->set_leaves(l.get_leaves() + r.get_leaves());
+		//std::string aux = l->get_data();
 
-		top->left = &l;
-		top->right = &r;
+		// std::cout << "freq: " << l->get_freq() + r->get_freq() << std::endl;
+		// std::cout << "n leaves: " << l->get_leaves() + r->get_leaves() << std::endl;
+		// std::cout << "name: " << l->get_data() << std::endl;
+		// std::cout << "-----------------" << std::endl;
+		top->set_data(l->get_data());
+		top->set_freq(l->get_freq() + r->get_freq());
+		top->set_leaves(l->get_leaves() + r->get_leaves());
 
-		myHeap->insert(*top);
+		top->left = l;
+		top->right = r;
+
+		myHeap->insert(top);
 	}
-	
-	//MinHeapNode *root = myHeap->extractMin();
+
+	//MinHeapNode *aux;
+	//aux = new MinHeapNode();
+
+	//aux = myHeap->extractMin();
+
+	//dfs(aux);
+
+	myHeap->set_codes(arrNodes, tNodes);
 
 	//exit(0);
 
@@ -80,7 +103,12 @@ int main(){
 			std::cout << quant << std::endl;
 		}
 		//WORD'S BINARY CODE
-		else if (cmd == 'c') std::cout << "NOT READY YET" << std::endl;
+		else if (cmd == 'c') {
+			for (int i = 0; i < tNodes; i++){
+				if (palavra == arrNodes[i].get_name())
+					std::cout << arrNodes[i].get_code() << std::endl;
+			}
+		}//std::cout << "NOT READY YET" << std::endl;
 	}
 
 	delete[] arrNodes;

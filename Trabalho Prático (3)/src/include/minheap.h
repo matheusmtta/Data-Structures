@@ -5,6 +5,7 @@
 #include "list.h"
 #include <string>
 
+
 class MinHeapNode {
 	private:
 		int leaves;
@@ -22,18 +23,20 @@ class MinHeapNode {
 		std::string get_data();
 };
 
+void create_code(MinHeapNode, Word*, std::string, bool*);
+
 class MinHeap {
  	public:
  		int size;
  		int capacity;
  		MinHeap(Word*, int);
- 		MinHeapNode *array;
-		MinHeapNode extractMin();
+ 		MinHeapNode **array;
+		MinHeapNode *extractMin();
  		void create(int);
- 		void build();
  		void heapify(int);
-	 	void swap_nodes(MinHeapNode*, MinHeapNode*);
- 		void insert(MinHeapNode);
+	 	void swap_nodes(MinHeapNode**, MinHeapNode**);
+ 		void insert(MinHeapNode*);
+ 		void set_codes(Word*, int);
  		int get_size();
  	};
 
