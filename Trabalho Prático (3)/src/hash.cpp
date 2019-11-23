@@ -1,7 +1,6 @@
 #include "include/hash.h"
 
 Hash::Hash(){
-	//ALPHABET SIZE
 	this->table = new List[26];
 }
 
